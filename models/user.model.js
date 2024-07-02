@@ -1,28 +1,18 @@
 const mongoose = require("mongoose");
 
-// Create a schema
-const usersSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String, // Passwords should be stored as strings (hashed)
-      required: true,
-    },
-    firstName: {
-      type: String, // First and last names should be stored as strings
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
+    username: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    products: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Product", default: [] },
+    ],
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", usersSchema);
+const User = mongoose.model("User", userSchema);
+
 module.exports = User;

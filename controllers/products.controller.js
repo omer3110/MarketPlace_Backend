@@ -1,4 +1,3 @@
-const fs = require("fs");
 const Product = require("../models/product.model");
 
 async function getProducts(req, res) {
@@ -80,8 +79,8 @@ async function deleteProduct(req, res) {
 }
 
 async function createProduct(req, res) {
-  const productToAdd = req.body;
-  const newProduct = new Product(productToAdd);
+  const { name, price, quantity, categories, user } = req.body;
+  const newProduct = new Product({ name, price, quantity, categories, user });
   try {
     const savedProduct = await newProduct.save();
     res.status(201).json({ message: "Product added", product: savedProduct });
@@ -103,11 +102,11 @@ async function createProduct(req, res) {
 
 async function editProduct(req, res) {
   const { id } = req.params;
-  const { name, price, quantity, category } = req.body;
+  const { name, price, quantity, categories } = req.body;
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
-      { name, price, quantity, category },
+      { name, price, quantity, categories },
       { new: true, runValidators: true }
     );
     if (!updatedProduct) {

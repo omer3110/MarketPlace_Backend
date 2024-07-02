@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
-const dotenv = require("dotenv");
-
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
+require("dotenv").config();
+
 const connectDB = require("./config/db");
 
 async function main() {
@@ -25,8 +25,8 @@ async function main() {
   const productRoutes = require("./routes/product.route");
   app.use("/api/product", productRoutes);
 
-  const userRoutes = require("./routes/user.route");
-  app.use("/api/user", userRoutes);
+  const authRoutes = require("./routes/auth.route");
+  app.use("/api/auth", authRoutes);
 
   //START SERVER
   app.listen(PORT, () => {
